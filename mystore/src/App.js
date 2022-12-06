@@ -1,6 +1,10 @@
 
 import './App.css';
 import React,{ useState, useEffect } from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-regular-svg-icons'
+
+
 
 function App() {
   // https://fakestoreapi.com/products
@@ -19,6 +23,15 @@ function App() {
     // console.log(store)
 
   }
+  const[like, setLike] = useState( false);
+
+  function likeme(){
+
+     
+    setLike(true);
+  }
+  console.log(like);
+
 
 
   return (
@@ -31,6 +44,7 @@ function App() {
               <>
                 <div className='box'>
                   <div className='img-container'>
+                    <span style={{like }=== true ? {backgroundcolor: "red"} : {color: ""}}  onClick={likeme} > <FontAwesomeIcon id='heart'   icon={faHeart} /> </span>
                      <img src={values.image} alt="product_image" />
 
                   </div>
@@ -43,9 +57,6 @@ function App() {
              
               </>
             )
-          
-          
-
         })}
       </div>
     </div>
