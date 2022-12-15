@@ -2,9 +2,10 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import Navigation from './components/Navigation';
-import Home from './components/Home';
+import Shop from './components/Shop';
 import Cart from './components/Cart';
 import {  Routes, Route } from "react-router-dom";
+import Home from './components/Home';
 
 
 
@@ -82,11 +83,11 @@ function App() {
       <Routes> 
 
       {/* <Route path={"/"} element={<Navigation size={cart.length} setShow={setShow} />} />   */}
-        {/* show ?  <Route index element={ <Home handleClick={handleClick} store={store} setStore={setStore} />}> </Route> : 
+        {/* show ?  <Route index element={ <Shop handleClick={handleClick} store={store} setStore={setStore} />}> </Route> : 
         
         <Route path={"cart"} element={ <Cart cart={cart} setCart={setCart} handleChange={handleChange} />}> </Route> */}
-       
       <Route  path={"/"} element={ <Home handleClick={handleClick} store={store} setStore={setStore} />} />  
+      <Route  path={"shop"} element={ <Shop handleClick={handleClick} store={store} setStore={setStore} />} />  
       <Route path={"cart"} element={ <Cart cart={cart} setCart={setCart} handleChange={handleChange} />} />  
       </Routes>
     </div>
