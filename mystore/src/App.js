@@ -1,64 +1,94 @@
 
 import './App.css';
-import React,{ useState, useEffect } from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import { faHeart } from '@fortawesome/free-regular-svg-icons'
+import React, { useState, useEffect } from 'react';
+import Navigation from './components/Navigation';
+import Home from './components/Home';
+import Cart from './components/Cart';
+import {  Routes, Route } from "react-router-dom";
 
 
 
 function App() {
-  // https://fakestoreapi.com/products
- 
-  const[store, setStore] = useState([]);
-  useEffect(() =>{
+
+  const [store, setStore] = useState([]);
+  useEffect(() => {
     mystore();
-  },[])
+  }, [])
 
 
-  const  mystore = async() => {
+  const mystore = async () => {
     const res = await fetch('https://fakestoreapi.com/products');
     const jsondata = await res.json();
-    // console.log(jsondata)
+    jsondata.forEach(object => {
+      object.amount = 1;
+    });
     setStore(jsondata);
-    // console.log(store)
+
 
   }
-  const[like, setLike] = useState( false);
 
-  function likeme(){
 
-     
-    setLike(true);
+  console.log(store)
+
+
+  // below caode is for add to Cart feature!
+  const [show, setShow] = useState(true);
+  const [cart, setCart] = useState([]);
+  const [warning, setWarning] = useState(false);
+
+
+  const handleClick = (item) => {
+    let isPresent = false;
+    cart.forEach((product) => {
+      if (item.id === product.id)
+        isPresent = true;
+    })
+    if (isPresent) {
+      setWarning(true);
+      alert("Item is already added to your cart")
+      setTimeout(() => {
+        setWarning(false);
+      }, 2000);
+      return;
+    }
+    setCart([...cart, item]);
   }
-  console.log(like);
+
+  const handleChange = (item, d) => {
+    let ind = -1;
+    cart.forEach((data, index) => {
+      if (data.id === item.id)
+        ind = index;
+    });
+    const tempArr = cart;
+    tempArr[ind].amount += d;
+
+    if (tempArr[ind].amount === 0)
+      tempArr[ind].amount = 1;
+    setCart([...tempArr])
+  }
+
+
+
 
 
 
   return (
     <div  >
-      <h2>MYSTORE</h2>
-      <div className='container'>
-        {store.map((values) => {
-          
-            return(
-              <>
-                <div className='box'>
-                  <div className='img-container'>
-                    <span style={{like }=== true ? {backgroundcolor: "red"} : {color: ""}}  onClick={likeme} > <FontAwesomeIcon id='heart'   icon={faHeart} /> </span>
-                     <img src={values.image} alt="product_image" />
+      <Navigation size={cart.length} setShow={setShow} />
+      {/* {
+        warning && <div className='warning'>Item is already added to your cart</div>
+      } */}
+      <Routes> 
 
-                  </div>
-                  <div className='content'>
-                    <h5>{values.title}</h5>
-                    <p>{values.description}</p>
-                  </div>
-                </div>
-
-             
-              </>
-            )
-        })}
-      </div>
+      {/* <Route path={"/"} element={<Navigation size={cart.length} setShow={setShow} />} />   */}
+        {/* show ?  <Route index element={ <Home handleClick={handleClick} store={store} setStore={setStore} />}> </Route> : 
+        
+        <Route path={"cart"} element={ <Cart cart={cart} setCart={setCart} handleChange={handleChange} />}> </Route> */}
+       
+      <Route  path={"/"} element={ <Home handleClick={handleClick} store={store} setStore={setStore} />} />  
+      <Route path={"cart"} element={ <Cart cart={cart} setCart={setCart} handleChange={handleChange} />} />  
+      </Routes>
     </div>
   );
 }
