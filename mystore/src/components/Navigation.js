@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Navigation.css"
 import {signInWithGoogle} from "./FirebaseConfig"
-import { FaBars, FaTimes } from "react-icons/fa";
+ 
 import { Outlet, Link } from "react-router-dom";
 
 
