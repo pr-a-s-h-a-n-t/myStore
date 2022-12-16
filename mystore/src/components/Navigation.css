@@ -71,6 +71,13 @@ h1 .responsive_nav {
 	font-size: 2rem;
 }
 
+.login-details > span{
+	border-radius: 1000000;
+	width: 20rem;
+	height: 2rem;
+	border: 2px solid red;
+}
+
 @media only screen and (max-width: 1024px) {
 	h1 .nav-btn {
 		visibility: visible;
